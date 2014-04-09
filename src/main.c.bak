@@ -1,0 +1,36 @@
+#include "mylib.h"
+
+//typedef unsigned short u16;
+
+// **Display**
+//u16* videoBuffer = (u16*) 0x6000000;
+#define REG_DISPCNT *(u16*) 0x4000000
+#define MODE3 3
+#define BG2_ENABLE (1<<10) // bit 10
+// ==Display==
+
+// **Colour**
+#define RGB(r,g,b) ((b)<<10 | (g)<<5 | (r))
+#define RED RGB(31, 0, 0)
+#define BLUE RGB(0, 0, 31)
+#define GREEN RGB(0, 31, 0)
+
+#define CYAN RGB(0, 31, 31)
+#define MAGENTA RGB(31, 0, 31)
+#define YELLOW RGB(31, 31, 0)
+#define BLACK RGB(0, 0, 0)
+#define WHITE RGB(31, 31, 31)
+// ==Colour
+
+int main(void)
+{
+	REG_DISPCNT = MODE3 | BG2_ENABLE;
+	drawHollowRect(0, 0, 240, 160, WHITE);
+	drawRect(2, 2, 236, 156, BLUE);
+	setPixel(0, 0, CYAN);
+	setPixel(0, 239, MAGENTA);
+	setPixel(159, 0, YELLOW);
+	setPixel(159, 239, BLACK);
+
+	while(1);
+}
